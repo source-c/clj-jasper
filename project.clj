@@ -3,9 +3,15 @@
   :url "https://github.com/source-c/clj-jasper"
   :license {:name "MIT License"}
 
-  :main clj-pulsar.core
+  :main clj-jasper.core
 
   :dependencies [[org.clojure/clojure "1.9.0"]
+
+                 ;; Jasper Libs
+                 [net.sf.jasperreports/jasperreports "6.7.0"
+                  :exclusions [com.lowagie/itext]]
+                 [net.sf.jasperreports/jasperreports-fonts "6.0.0"]
+                 [com.lowagie/itext "4.2.2"]
 
                  ;; Loggers
                  ;; -------
