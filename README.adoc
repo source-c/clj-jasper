@@ -1,0 +1,9 @@
+= clj-jasper
+
+A Clojure library to work with Jasper Reports
+
+== License
+
+Copyright &copy; 2018 AI a.k.a. MelKori
+
+Distributed under the MIT License.
