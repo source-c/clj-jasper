@@ -2,6 +2,19 @@
 
 A Clojure library to work with Jasper Reports
 
+image:https://img.shields.io/clojars/v/net.tbt-post/clj-jasper.svg[]
+
+== Usage
+
+Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `project.clj`:
+
+[source,clojure]
+----
+[net.tbt-post/clj-jasper "0.0.1"]
+----
+
+NOTE: add examples
+
 == License
 
 Copyright &copy; 2018 AI a.k.a. MelKori
