@@ -1,6 +1,5 @@
 (ns clj-jasper.core
-  (:require [taoensso.timbre :as log]
-            [clojure.java.io :as io]
+  (:require [clojure.java.io :as io]
             [clojure.walk :as walk])
   (:import (java.util HashMap Map)
            (net.sf.jasperreports.engine JasperCompileManager
@@ -8,9 +7,6 @@
                                         JasperExportManager
                                         JRDataSource
                                         JasperReport)))
-
-(defn -main [& _]
-  (log/warn "There is no own runtime!"))
 
 (defn- data->jr [coll]
   (let [seen (atom false)
@@ -28,7 +24,7 @@
 (def ^:private mime-types
   {:pdf "application/pdf"})
 
-(def *jr-templates-path* "reports")
+(def ^:dynamic *jr-templates-path* "reports")
 
 (defn data->report [{:keys [name data mtype filename ops]
                      :or   {mtype :pdf}}]
