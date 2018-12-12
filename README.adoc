@@ -8,12 +8,30 @@ image:https://img.shields.io/clojars/v/net.tbt-post/clj-jasper.svg[]
 
 Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `project.clj`:
 
+.project.clj
 [source,clojure]
 ----
-[net.tbt-post/clj-jasper "0.0.1"]
+[net.tbt-post/clj-jasper "0.0.2"]
 ----
 
-NOTE: add examples
+.example.clj
+[source, clojure]
+----
+(ns my-app.jasper
+  (:require [clj-jasper.core :as jc]
+            [clojure.java.io :as io]))
+
+(defn render [name data]
+  (binding [jc/*jr-templates-path* "my-templates"]
+    (let [out (jc/data->report {:name     (format "my-reports/%s" name)
+                                :data     [data]
+                                :filename name})]
+      {:status  200
+       :headers {"Content-Type"        (:type out)
+                 "Content-Disposition" (format "attachment; filename=\"%s\"" (:name out))
+                 "Cache-Control"       "no-cache"}
+       :body    (-> out :file io/input-stream)})))
+----
 
 == License
 
