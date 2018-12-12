@@ -1,4 +1,4 @@
-(defproject net.tbt-post/clj-jasper "0.0.2-dev"
+(defproject net.tbt-post/clj-jasper "0.0.2"
   :description "A Clojure library to work with Jasper Reports"
   :url "https://github.com/source-c/clj-jasper"
   :license {:name "MIT License"}
@@ -7,7 +7,9 @@
                  [net.sf.jasperreports/jasperreports "6.7.0"
                   :exclusions [com.lowagie/itext]]
                  [net.sf.jasperreports/jasperreports-fonts "6.0.0"]
-                 [com.lowagie/itext "4.2.2"]
+                 ;[com.lowagie/itext "4.2.2"]
+                 [com.lowagie/itext "2.1.7"]
+                 [net.sourceforge.barbecue/barbecue "1.5-beta1"]
 
                  ;; Loggers
                  ;; -------

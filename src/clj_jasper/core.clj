@@ -26,13 +26,16 @@
 
 (def ^:dynamic *jr-templates-path* "reports")
 
-(defn data->report [{:keys [name data mtype filename ops]
+(defn template->object [name]
+  (let [template (some-> (format "%s/%s.jrxml" *jr-templates-path* name)
+                         io/resource
+                         io/file)]
+    (some-> template io/input-stream JasperCompileManager/compileReport)))
+
+(defn data->report [{:keys [name data mtype filename ops report]
                      :or   {mtype :pdf}}]
 
-  (let [template (-> (format "%s/%s.jrxml" *jr-templates-path* name)
-                     io/resource
-                     io/file)
-        report (-> template io/input-stream JasperCompileManager/compileReport)
+  (let [report (or report (template->object name))
         j-data (data->jr (or data {:empty true}))
         filled (JasperFillManager/fillReport
                  ^JasperReport report
@@ -42,5 +45,5 @@
                 :pdf (JasperExportManager/exportReportToPdf filled))]
 
     {:name (or filename (format "%s.%s" name (name mtype)))
-     :type (get mtype mime-types)
+     :type (get mime-types mtype)
      :file bytes}))
