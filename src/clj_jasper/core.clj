@@ -26,10 +26,16 @@
 
 (def ^:dynamic *jr-templates-path* "reports")
 
+(defn- read-template [t-path]
+  (if
+    (.isAbsolute (io/file t-path))
+    (-> t-path io/file)
+    (-> t-path io/resource)))
+
 (defn template->object [name]
-  (let [template (some-> (format "%s/%s.jrxml" *jr-templates-path* name)
-                         io/resource
-                         io/file)]
+  (let [template (some->
+                   (format "%s/%s.jrxml" *jr-templates-path* name)
+                   read-template)]
     (some-> template io/input-stream JasperCompileManager/compileReport)))
 
 (defn data->report [{:keys [name data mtype filename ops report]
