@@ -21,11 +21,11 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
   (:require [clj-jasper.core :as jc]
             [clojure.java.io :as io]))
 
-(defn render [name data]
+(defn render [name data properties]
   (binding [jc/*jr-templates-path* "my-templates"]
-    (let [out (jc/data->report {:name     (format "my-reports/%s" name)
-                                :data     [data]
-                                :filename name})]
+    (let [out (jc/data->report {:name (format "my-reports/%s" name)
+                                :data data
+                                :ops  properties})]
       {:status  200
        :headers {"Content-Type"        (:type out)
                  "Content-Disposition" (format "attachment; filename=\"%s\"" (:name out))
