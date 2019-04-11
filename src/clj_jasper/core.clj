@@ -40,18 +40,18 @@
                    read-template)]
     (some-> template io/input-stream JasperCompileManager/compileReport)))
 
-(defn data->report [{:keys [name data mtype parameters report]
+(defn data->report [{:keys [name data mtype filename ops report]
                      :or   {mtype :pdf}}]
 
   (let [report (or report (template->object name))
         j-data (data->jr (or data {:empty true}))
         filled (JasperFillManager/fillReport
                  ^JasperReport report
-                 ^Map (HashMap. ^Map (walk/stringify-keys (or parameters {})))
+                 ^Map (HashMap. ^Map (walk/stringify-keys (or ops {})))
                  ^JRDataSource j-data)
         bytes  (case mtype
                  :pdf (JasperExportManager/exportReportToPdf filled))]
 
-    {:filename (format "%s.%s" (last (string/split name #"/")) (clojure.core/name mtype))
-     :type     (get mime-types mtype)
-     :file     bytes}))
+    {:name (or filename (format "%s.%s" (last (string/split name #"/")) (clojure.core/name mtype)))
+     :type (get mime-types mtype)
+     :file bytes}))

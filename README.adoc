@@ -23,12 +23,12 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 
 (defn render [name data properties]
   (binding [jc/*jr-templates-path* "my-templates"]
-    (let [out (jc/data->report {:name       (format "my-reports/%s" name)
-                                :data       data
-                                :properties properties})]
+    (let [out (jc/data->report {:name (format "my-reports/%s" name)
+                                :data data
+                                :ops  properties})]
       {:status  200
        :headers {"Content-Type"        (:type out)
-                 "Content-Disposition" (format "attachment; filename=\"%s\"" (:filename out))
+                 "Content-Disposition" (format "attachment; filename=\"%s\"" (:name out))
                  "Cache-Control"       "no-cache"}
        :body    (-> out :file io/input-stream)})))
 ----
