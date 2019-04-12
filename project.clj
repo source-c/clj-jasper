@@ -10,6 +10,8 @@
                  ;[com.lowagie/itext "4.2.2"]
                  [com.lowagie/itext "2.1.7"]
                  [net.sourceforge.barbecue/barbecue "1.5-beta1"]
+                 [com.google.zxing/core "3.3.3"]
+                 [net.sf.barcode4j/barcode4j "2.1"]
                  [org.apache.xmlgraphics/batik-bridge "1.11"]
 
                  ;; Loggers
