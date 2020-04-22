@@ -2,7 +2,7 @@
 
 A Clojure library to work with Jasper Reports
 
-image:https://img.shields.io/clojars/v/net.tbt-post/clj-jasper.svg[]
+image:https://img.shields.io/clojars/v/net.tbt-post/clj-jasper.svg[Clojars Project]
 
 == Usage
 
