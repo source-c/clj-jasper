@@ -1,4 +1,4 @@
-(defproject net.tbt-post/clj-jasper "0.0.9"
+(defproject net.tbt-post/clj-jasper "0.0.10"
   :description "A Clojure library to work with Jasper Reports"
   :url "https://github.com/source-c/clj-jasper"
   :license {:name "MIT License"}
