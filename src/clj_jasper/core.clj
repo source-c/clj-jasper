@@ -6,7 +6,8 @@
     (clojure.lang ExceptionInfo)
     (java.io ByteArrayOutputStream OutputStream)
     (java.util HashMap Map ArrayList)
-    (net.sf.jasperreports.engine JasperCompileManager
+    (net.sf.jasperreports.engine DefaultJasperReportsContext
+                                 JasperCompileManager
                                  JasperFillManager
                                  JRDataSource
                                  JRRewindableDataSource
@@ -17,7 +18,7 @@
 
 (defn- data->jr [coll]
   (let [initial (cons nil coll)
-        data    (atom initial)]
+        data (atom initial)]
     (reify JRRewindableDataSource
       (moveFirst [_]
         (reset! data initial))
@@ -51,15 +52,15 @@
 
 (defn- exporter [mtype]
   (case mtype
-    :pdf (JRPdfExporter.)
+    :pdf (JRPdfExporter. (DefaultJasperReportsContext/getInstance))
     (throw (ExceptionInfo. (format "Unknown mtype: '%s'" mtype) {:mtype mtype}))))
 
 (defn data->report [{:keys [name data mtype filename ops report]
                      :or   {mtype :pdf}}]
-  (let [report   (or report (template->object name))
-        print    (fill report data ops)
+  (let [report (or report (template->object name))
+        print (fill report data ops)
         exporter (exporter mtype)
-        baos     (ByteArrayOutputStream.)]
+        baos (ByteArrayOutputStream.)]
     (.setExporterInput exporter (SimpleExporterInput. ^JasperPrint print))
     (.setExporterOutput exporter (SimpleOutputStreamExporterOutput. baos))
     (.exportReport exporter)
@@ -72,7 +73,7 @@
                        {:keys [compile mtype common-parameters]
                         :or   {compile template->object
                                mtype   :pdf}}]
-  (let [prints   (ArrayList.)
+  (let [prints (ArrayList.)
         exporter (exporter mtype)]
     (doseq [{:keys [name data parameters]} reports]
       (.add prints (fill (compile name) data (merge parameters common-parameters))))
