@@ -12,7 +12,7 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 .project.clj
 [source,clojure]
 ----
-[net.tbt-post/clj-jasper "0.0.8"]
+[net.tbt-post/clj-jasper "0.0.9"]
 ----
 
 .example.clj
@@ -36,6 +36,6 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 
 == License
 
-Copyright &copy; 2018-2021 AI a.k.a. MelKori
+Copyright &copy; 2018-2022 AI a.k.a. MelKori
 
 Distributed under the MIT License.
