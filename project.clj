@@ -6,7 +6,6 @@
   :dependencies [;; Jasper Libs
                  [net.sf.jasperreports/jasperreports "6.18.1"]
                  [net.sf.jasperreports/jasperreports-fonts "6.18.1"]
-                 [org.codehaus.castor/castor-xml "1.4.1"]
                  ;[com.lowagie/itext "2.1.7"]
                  [net.sourceforge.barbecue/barbecue "1.5-beta1"]
                  [com.google.zxing/core "3.4.1"]
