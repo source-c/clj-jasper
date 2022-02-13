@@ -12,7 +12,7 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 .project.clj
 [source,clojure]
 ----
-[net.tbt-post/clj-jasper "0.0.9"]
+[net.tbt-post/clj-jasper "0.0.10"]
 ----
 
 .example.clj
@@ -38,9 +38,15 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 
 . Current implementation supports only PDF generations.
 . There is a bug in JAXP/XERCES (derived from CLJ<-JR<-Digester) that prevent the use of a parser that contains a schema with a DTD.
+. Well tested with Java versions:
+.. OpenJDK 11.0.12
+.. OpenJDK 15.0.1
+.. GraalVM 19.3.6.r11
+.. Corretto 8.322.06.1
+. Version v0.0.9 may be runtime incompatible with uberjar build in some circumstances
 
 == License
 
-Copyright &copy; 2018-2022 AI a.k.a. MelKori
+Copyright &copy; 2018-2022
 
 Distributed under the MIT License.
