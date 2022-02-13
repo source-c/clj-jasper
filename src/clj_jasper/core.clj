@@ -4,7 +4,7 @@
             [clojure.string :as string])
   (:import
     (clojure.lang ExceptionInfo)
-    (java.io ByteArrayOutputStream OutputStream)
+    (java.io ByteArrayOutputStream OutputStream InputStream)
     (java.util HashMap Map ArrayList)
     (net.sf.jasperreports.engine DefaultJasperReportsContext
                                  JasperCompileManager
@@ -12,9 +12,12 @@
                                  JRDataSource
                                  JRRewindableDataSource
                                  JRField
-                                 JasperReport JasperPrint)
+                                 JasperReport
+                                 JasperPrint)
     (net.sf.jasperreports.engine.export JRPdfExporter)
-    (net.sf.jasperreports.export SimpleExporterInput SimpleOutputStreamExporterOutput)))
+    (net.sf.jasperreports.export SimpleExporterInput SimpleOutputStreamExporterOutput)
+    (net.sf.jasperreports.engine.design JasperDesign)
+    (net.sf.jasperreports.engine.xml JRXmlLoader)))
 
 (defn- data->jr [coll]
   (let [initial (cons nil coll)
@@ -41,8 +44,11 @@
 (defn template->object [name]
   (let [template (some->
                    (format "%s/%s.jrxml" *jr-templates-path* name)
-                   read-template)]
-    (some-> template io/input-stream JasperCompileManager/compileReport)))
+                   read-template)
+        compiler ^JasperCompileManager (JasperCompileManager/getInstance (DefaultJasperReportsContext/getInstance))
+        data ^InputStream (some-> template io/input-stream)
+        design ^JasperDesign (JRXmlLoader/load data)]
+    (.compile compiler design)))
 
 (defn- fill [^JasperReport report data parameters]
   (JasperFillManager/fillReport

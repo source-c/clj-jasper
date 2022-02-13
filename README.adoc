@@ -34,6 +34,11 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
        :body    (-> out :file io/input-stream)})))
 ----
 
+== Notes and limitations
+
+. Current implementation supports only PDF generations.
+. There is a bug in JAXP/XERCES (derived from CLJ<-JR<-Digester) that prevent the use of a parser that contains a schema with a DTD.
+
 == License
 
 Copyright &copy; 2018-2022 AI a.k.a. MelKori
