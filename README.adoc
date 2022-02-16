@@ -45,6 +45,8 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 .. Corretto 8.322.06.1
 . Version v0.0.9 and v0.0.10 may be runtime incompatible with uberjar build in some circumstances
 . JasperReports is very dependent on the SAX parser and requires at least a basic X setup on the server in order to render.
+. Default font have to be available in JVM
+. Final app is very sensitive to AOT compilation so be careful
 
 == License
 
