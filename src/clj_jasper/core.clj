@@ -1,4 +1,5 @@
 (ns clj-jasper.core
+  (:gen-class)
   (:require [clojure.java.io :as io]
             [clojure.walk :as walk]
             [clojure.string :as string])
@@ -6,21 +7,15 @@
     (clojure.lang ExceptionInfo)
     (java.io ByteArrayOutputStream OutputStream)
     (java.util HashMap Map ArrayList)
-    (net.sf.jasperreports.engine DefaultJasperReportsContext
-                                 JasperReportsContext
-                                 JasperCompileManager
+    (net.sf.jasperreports.engine JasperCompileManager
                                  JasperFillManager
                                  JRDataSource
                                  JRRewindableDataSource
                                  JRField
                                  JasperReport
-                                 JasperPrint)
+                                 JasperPrint DefaultJasperReportsContext)
     (net.sf.jasperreports.engine.export JRPdfExporter)
-    (net.sf.jasperreports.export SimpleExporterInput SimpleOutputStreamExporterOutput)
-    (net.sf.jasperreports.engine.design JasperDesign)
-    (net.sf.jasperreports.engine.xml JRXmlLoader JRXmlDigesterFactory JRXmlDigester)
-    (org.xml.sax InputSource)
-    (javax.xml.parsers SAXParserFactory SAXParser SAXParserFactory)))
+    (net.sf.jasperreports.export SimpleExporterInput SimpleOutputStreamExporterOutput)))
 
 (defn- data->jr [coll]
   (let [initial (cons nil coll)
@@ -44,29 +39,6 @@
     (-> t-path io/file)
     (-> t-path io/resource)))
 
-(def ^:private ^JasperReportsContext instance
-  (DefaultJasperReportsContext/getInstance))
-(def ^:private ^SAXParser sax-parser
-  (.newSAXParser (SAXParserFactory/newInstance)))
-(def ^:private ^JRXmlDigester digester
-  (let [-digester (JRXmlDigester. ^SAXParser sax-parser)]
-    (JRXmlDigesterFactory/setComponentsInternalEntityResources instance -digester)
-    (JRXmlDigesterFactory/configureDigester instance -digester)
-    -digester))
-(def ^:private ^JasperCompileManager compiler
-  (JasperCompileManager/getInstance instance))
-
-(defn template->design [name]
-  (let [template (some->
-                   (format "%s/%s.jrxml" *jr-templates-path* name)
-                   read-template)
-        data ^InputSource (some-> template io/input-stream InputSource.)
-        loader ^JRXmlLoader (JRXmlLoader. instance digester)
-        design ^JasperDesign (.loadXML loader data)]
-
-    (.setLanguage design "java")
-    (.compile compiler design)))
-
 (defn template->object [name]
   (let [template (some->
                    (format "%s/%s.jrxml" *jr-templates-path* name)
@@ -81,7 +53,7 @@
 
 (defn- exporter [mtype]
   (case mtype
-    :pdf (JRPdfExporter. instance)
+    :pdf (JRPdfExporter. (DefaultJasperReportsContext/getInstance))
     (throw (ExceptionInfo. (format "Unknown mtype: '%s'" mtype) {:mtype mtype}))))
 
 (defn data->report [{:keys [name data mtype filename ops report]
