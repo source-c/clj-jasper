@@ -12,7 +12,7 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 .project.clj
 [source,clojure]
 ----
-[net.tbt-post/clj-jasper "0.0.10"]
+[net.tbt-post/clj-jasper "0.0.11"]
 ----
 
 .example.clj
