@@ -43,7 +43,8 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 .. OpenJDK 15.0.1
 .. GraalVM 19.3.6.r11
 .. Corretto 8.322.06.1
-. Version v0.0.9 may be runtime incompatible with uberjar build in some circumstances
+. Version v0.0.9 and v0.0.10 may be runtime incompatible with uberjar build in some circumstances
+. JasperReports is very dependent on the SAX parser and requires at least a basic X setup on the server in order to render.
 
 == License
 
