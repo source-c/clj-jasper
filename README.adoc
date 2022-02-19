@@ -12,7 +12,7 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 .project.clj
 [source,clojure]
 ----
-[net.tbt-post/clj-jasper "0.0.11"]
+[net.tbt-post/clj-jasper "0.0.12"]
 ----
 
 .example.clj
@@ -46,7 +46,10 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 . Version v0.0.9 and v0.0.10 may be runtime incompatible with uberjar build in some circumstances
 . JasperReports is very dependent on the SAX parser and requires at least a basic X setup on the server in order to render.
 . Default font have to be available in JVM
-. Final app is very sensitive to AOT compilation so be careful
+. Final app is very sensitive to AOT compilation so pay attention on:
+.. Proper AOT compilation may require added line like `:uberjar-merge-with {#"^jasperreports_extension\.properties$" [slurp #(clojure.string/join "\r\n" %&) spit]}` into your project directly.
+.. For some circumstances this may be not enough, and complete avoiding of AOT for particular class might be required.
+.. For some rare and very complex cases even complete avoiding `:uberjar {:aot :all}` might be highly recommended
 
 == License
 
