@@ -1,7 +1,9 @@
-(defproject net.tbt-post/clj-jasper "0.0.11"
+(defproject net.tbt-post/clj-jasper "0.0.12"
   :description "A Clojure library to work with Jasper Reports"
   :url "https://github.com/source-c/clj-jasper"
   :license {:name "MIT License"}
+
+  :uberjar-merge-with {#"^jasperreports_extension\.properties$" [slurp #(clojure.string/join "\r\n" %&) spit]}
 
   :dependencies [;; Jasper Libs
                  [net.sf.jasperreports/jasperreports "6.18.1"]
