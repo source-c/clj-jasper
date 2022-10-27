@@ -60,6 +60,6 @@ Add the following to your http://github.com/technomancy/leiningen[Leiningen's] `
 
 == License
 
-Copyright &copy; 2018-2022
+Copyright &copy; 2018-2022 MelKori, onoha, UPD Consulting
 
 Distributed under the MIT License.
